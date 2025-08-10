@@ -60,3 +60,65 @@ Fix: Build security in from day one — leverage Azure AD, OAuth 2.0, and Identi
 System design is as much about avoiding mistakes as it is about making the right architectural choices. Avoid these traps, and your .NET applications will be more resilient, maintainable, and ready to scale.
 
 
+
+
+
+Here’s how a typical system design interview happens (from a real conversation)
+
+1. Handling Millions of Requests per Second 
+
+Interviewer: “Your system needs to handle millions of requests per second. What’s your approach?” 
+
+You: I’ll start with a load balancer to evenly distribute traffic across multiple application servers and I will also use a Reverse Proxy like NGINX or AWS ALB for added routing intelligence. 
+
+
+2. Server Failures and High Availability 
+
+Interviewer: “What happens if a server goes down?” 
+
+You: I’d replicate data across multiple servers and set up a heartbeat mechanism to detect failures. Failed servers are replaced using auto-scaling in cloud services. 
+
+
+3. Scaling for Traffic Spikes 
+
+Interviewer: “What if traffic spikes overnight?” 
+
+You: Horizontal scaling, I’d add more servers dynamically behind the load balancer using auto-scaling groups or Kubernetes clusters. 
+
+I will also use caching layers like Redis or Memcached to reduce backend load. 
+
+4. Storing Large Volumes of Data 
+
+Interviewer: “How would you store terabytes or petabytes of data?” 
+
+You: I’d shard the database and distribute data across multiple nodes using techniques like consistent hashing to avoid data imbalance. 
+
+5. Ensuring Data Durability 
+
+Interviewer: “How do you ensure no data is lost?” 
+
+You: Replication, I’d keep multiple copies of data using a Primary-Replica setup or a Leaderless Replication model.  For mission-critical systems, multi-region replication ensures disaster recovery. 
+
+
+6. Dealing with Write Performance Issues 
+
+Interviewer: “Won’t replication slow down writes?” 
+
+You: It depends on whether we prioritize strong consistency or eventual consistency. 
+- For strong consistency, wait until writes propagate to all replicas before returning success. 
+- For high write throughput, go with eventual consistency like DynamoDB or Cassandra. 
+
+7. Conflict Resolution in Distributed Systems 
+
+Interviewer: “How do you handle conflicting writes in distributed databases?” 
+
+You: Use techniques like vector clocks or timestamps to track versions of data. Conflicts can be resolved during reads using application logic. 
+
+8. Write-Heavy Use Cases
+Interviewer: “When would you use leaderless replication?” 
+
+You: Leaderless systems like Cassandra are great for high-write use cases, where speed matters more than consistency—e.g., logging systems or IoT data collection. 
+
+
+
+
